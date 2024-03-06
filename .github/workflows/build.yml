@@ -1,0 +1,20 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  macos-build:
+    runs-on: macos-13
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+
+    - name: Build project
+      uses: nicledomaS/cmake_build_action@v1.4
+      with:
+        unit_test_build: -DCMAKE_BUILD_TYPE=Release
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: build/raptorq/libraptorq.dlib
+        name: libraptorq.dlib
