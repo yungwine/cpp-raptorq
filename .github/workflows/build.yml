@@ -3,8 +3,12 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  macos-build:
-    runs-on: macos-13
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-13 ]
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -16,5 +20,5 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        path: build/raptorq/libpyraptorq.dylib
-        name: libpyraptorq.dylib
+        path: build/raptorq/libpyraptorq.*
+        name: binaries-${{ matrix.os }}
